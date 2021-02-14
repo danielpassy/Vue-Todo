@@ -1,6 +1,6 @@
 <template>
   <div>
-    You came to the the pag of the followin task
+    You came to the the page of the following task:
     <Todo @emitit="asd" :data="todo" v-if="todo" :key="todo.id" />
   </div>
 </template>

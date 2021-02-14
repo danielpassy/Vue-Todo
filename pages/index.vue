@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div id="flex">
-      <form>
+      <form v-on:submit.prevent="createTodo">
         <input
           type="text"
           placeholder="Insert your Todo"
@@ -9,8 +9,8 @@
           name="todo"
           id="todo"
         />
+        <input type="submit"  />
       </form>
-      <input type="submit" @click="() => addTodo(this.todoInput)" />
     </div>
     <Todo @emitit="delTodo" v-for="todo in todos" :data="todo" :key="todo.id" />
     <div class="todos"></div>
@@ -33,6 +33,10 @@ export default {
     };
   },
   methods: {
+      createTodo(){
+          this.addTodo(this.todoInput)
+          this.todoInput = ""
+      },
     ...mapMutations(["addTodo", "delTodo"]),
   },
 };
