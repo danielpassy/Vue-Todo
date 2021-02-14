@@ -10,10 +10,10 @@
           id="todo"
         />
       </form>
-      <input type="submit" @click="alertUser" />
+      <input type="submit" @click="alertUser()" />
     </div>
     <Todo
-      @emitit="deleteTodo"
+      @emitit="delTodo"
       v-for="todo in todos"
       :data="todo"
       :key="todo.id"
@@ -23,24 +23,26 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "Vuex";
+
 export default {
   componentes: {},
+  computed: {
+    todos() {
+      return this.$store.state.todos;
+    },
+  },
   data() {
     return {
       todoInput: "",
-      todos: [{ description: "hiho", id: 0 }],
     };
   },
   methods: {
     alertUser() {
-      const todo = { description: this.todoInput, id: this.todos.length };
-      this.todos.push(todo);
+      this.addTodo(this.todoInput);
       this.todoInput = "";
     },
-    deleteTodo(id) {
-        this.todos = this.todos.filter((todo) => todo.id !== id)
-        
-    },
+    ...mapMutations(["addTodo", "delTodo"]),
   },
 };
 </script>

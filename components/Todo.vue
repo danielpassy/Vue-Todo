@@ -5,7 +5,7 @@
       <form>
         <input v-model="checked" type="checkbox" />
       </form>
-      <input type="submit" value='delete' @click="deleteTodo()">
+      <input type="submit" value="delete" @click="deleteTodo()" />
     </div>
   </div>
 </template>
@@ -21,7 +21,6 @@ export default {
   },
   methods: {
     deleteTodo() {
-      console.log("hi")
       this.$emit("emitit", this.data.id);
     },
   },
