@@ -12,8 +12,12 @@
       </form>
       <input type="submit" @click="alertUser" />
     </div>
-    <Todo @grito="removeTodo" description="shalom" />
-
+    <Todo
+      @emitit="deleteTodo"
+      v-for="todo in todos"
+      :data="todo"
+      :key="todo.id"
+    />
     <div class="todos"></div>
   </div>
 </template>
@@ -24,16 +28,18 @@ export default {
   data() {
     return {
       todoInput: "",
-      todos: [],
+      todos: [{ description: "hiho", id: 0 }],
     };
   },
   methods: {
-    alertUser(e) {
-      this.todos.push(this.todoInput);
+    alertUser() {
+      const todo = { description: this.todoInput, id: this.todos.length };
+      this.todos.push(todo);
       this.todoInput = "";
     },
-    removeTodo() {
-      alert("someone attempted to delete this");
+    deleteTodo(id) {
+        this.todos = this.todos.filter((todo) => todo.id !== id)
+        
     },
   },
 };
@@ -41,11 +47,10 @@ export default {
 
 <style>
 #flex {
-    display:flex
+  display: flex;
 }
-.container{
-    align-items: center;
-    width: 80vw;
-
+.container {
+  align-items: center;
+  width: 80vw;
 }
 </style>

@@ -1,8 +1,11 @@
 <template>
   <div>
     <div id="flex">
-      {{ description }} asdasd
-      <form><input v-model="checked" type="checkbox" /></form>
+      {{ data.description }}
+      <form>
+        <input v-model="checked" type="checkbox" />
+      </form>
+      <input type="submit" value='delete' @click="deleteTodo()">
     </div>
   </div>
 </template>
@@ -10,7 +13,7 @@
 <script>
 export default {
   name: "Todo",
-  props: ["description"],
+  props: ["data"],
   data() {
     return {
       checked: true,
@@ -18,7 +21,8 @@ export default {
   },
   methods: {
     deleteTodo() {
-      this.$emit("grito", "1");
+      console.log("hi")
+      this.$emit("emitit", this.data.id);
     },
   },
 };
