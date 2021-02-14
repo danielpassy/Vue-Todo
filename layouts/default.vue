@@ -3,5 +3,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods:{
+    asd(){
+      alert("hi")
+    }
+  }
+};
 </script>

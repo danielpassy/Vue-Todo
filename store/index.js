@@ -1,6 +1,8 @@
 export const state = () => ({
     todos: [
-        { description: "hiho", id: 0 }
+        { description: "hiho", id: 0 },
+        { description: "hiho", id: 1 },
+        { description: "hiho", id: 2 },
     ]
 })
 

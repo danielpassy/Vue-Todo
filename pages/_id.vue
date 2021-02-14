@@ -1,0 +1,27 @@
+<template>
+  <div>
+    You came to the the pag of the followin task
+    <Todo @emitit="asd" :data="todo" v-if="todo" :key="todo.id" />
+  </div>
+</template>
+
+<script>
+import { mapMutations } from "Vuex";
+
+export default {
+  async asyncData({ params, store }) {
+    let todo = { todo: store.getters.getTodo(params.id) };
+    return todo;
+  },
+  methods: {
+    ...mapMutations(["addTodo", "delTodo"]),
+    asd(id) {
+      this.delTodo(id);
+      this.todo = this.$store.getters.getTodo(id);
+    },
+  },
+};
+</script>
+
+<style>
+</style>

@@ -10,14 +10,9 @@
           id="todo"
         />
       </form>
-      <input type="submit" @click="alertUser()" />
+      <input type="submit" @click="() => addTodo(this.todoInput)" />
     </div>
-    <Todo
-      @emitit="delTodo"
-      v-for="todo in todos"
-      :data="todo"
-      :key="todo.id"
-    />
+    <Todo @emitit="delTodo" v-for="todo in todos" :data="todo" :key="todo.id" />
     <div class="todos"></div>
   </div>
 </template>
@@ -29,7 +24,7 @@ export default {
   componentes: {},
   computed: {
     todos() {
-      return this.$store.state.todos;
+      return this.$store.getters.getTodos;
     },
   },
   data() {
@@ -38,10 +33,6 @@ export default {
     };
   },
   methods: {
-    alertUser() {
-      this.addTodo(this.todoInput);
-      this.todoInput = "";
-    },
     ...mapMutations(["addTodo", "delTodo"]),
   },
 };
