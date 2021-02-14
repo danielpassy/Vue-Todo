@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "Vuex";
+import { mapMutations } from "Vuex";
 
 export default {
   componentes: {},
