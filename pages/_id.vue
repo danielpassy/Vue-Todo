@@ -17,6 +17,7 @@ export default {
     ...mapMutations(["addTodo", "delTodo"]),
     asd(id) {
       this.delTodo(id);
+      this.$router.push(`/`)
       this.todo = this.$store.getters.getTodo(id);
     },
   },

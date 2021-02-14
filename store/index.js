@@ -18,10 +18,21 @@ export const getters = {
 
 export const mutations = {
     addTodo(state, description) {
-        state.todos.push({
-            description: description,
-            id: state.todos.length
-        })
+        // prevent same ID 
+
+        let length = state.todos.length
+        if (length != 0) {
+            state.todos.push({
+                description: description,
+                id: state.todos[length - 1].id + 1
+            })
+        }
+        else {
+            state.todos.push({
+                description: description,
+                id: 0
+            })
+        }
     },
     delTodo(state, id) {
         state.todos = state.todos.filter(todo => todo.id !== id)

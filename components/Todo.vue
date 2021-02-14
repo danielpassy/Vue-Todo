@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="flex">
-      {{ data.description }}
+      <NuxtLink :to="`/${data.id}`"> {{ data.description }}</NuxtLink>
       <form>
         <input v-model="checked" type="checkbox" />
       </form>
