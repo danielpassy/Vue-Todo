@@ -1,5 +1,14 @@
 <template>
   <div class="container">
+    <div>
+      <h1 v-if="!$auth.loggedIn">
+        <NuxtLink to="/login">Login</NuxtLink>
+      </h1>
+      <div v-else>
+        <p @click="$auth.logout()">Logout</p>
+      </div>
+    </div>
+
     <div id="flex">
       <form v-on:submit.prevent="createTodo">
         <input
@@ -35,16 +44,20 @@ export default {
   },
 
   async asyncData({ params, store, redirect }) {
-    try {
-      let { data } = await axios.get(
-        "https://jsonplaceholder.typicode.com/todos?_limit=5"
-      );
-      data.forEach((todo) => {
-        todo.description = todo.title;
-        store.commit("addAPITodo", todo);
-      });
-    } catch (error) {
-      redirect("/1/1");
+    // only fetch data on first page load
+    if (!store.state.initialized) {
+      try {
+        let { data } = await axios.get(
+          "https://jsonplaceholder.typicode.com/todos?_limit=5"
+        );
+        data.forEach((todo) => {
+          todo.description = todo.title;
+          store.commit("addAPITodo", todo);
+        });
+        store.commit("initialize");
+      } catch (error) {
+        redirect("/1/1");
+      }
     }
   },
   async fetch() {},
@@ -53,7 +66,7 @@ export default {
       this.addTodo(this.todoInput);
       this.todoInput = "";
     },
-    ...mapMutations(["addTodo", "delTodo", ""]),
+    ...mapMutations(["addTodo", "delTodo", "initialize"]),
   },
 };
 </script>

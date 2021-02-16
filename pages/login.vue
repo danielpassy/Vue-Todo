@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <div><NuxtLink to="/">To home</NuxtLink></div>
     <h1>Login</h1>
 
     <UserAuthForm buttonText="Login" :submitForm="loginUser" />
@@ -16,10 +17,16 @@ export default {
   methods: {
     async loginUser(logininfo) {
       try {
-        let response = await this.$auth.loginWith('local', { data: logininfo });
-        console.log(response)
+        const a = 1
+        a = 2
+        let response = await this.$auth.loginWith("local", { data: logininfo });
+        console.log(response);
       } catch (error) {
-        console.log(error);
+        debugger
+        this.$store.dispatch("snackbar/setSnackbar", {
+          color: "error",
+          text: "You must be an admin to view that page.",
+        });
       }
     },
   },

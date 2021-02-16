@@ -45,19 +45,6 @@ export default {
   ],
 
 
-  auth: {
-    strategies: {
-      local: {
-        endpoints: {
-          login: { url: '/sessions', method: 'post', propertyName: 'token' },
-          logout: { url: '/sessions', method: 'delete' },
-          user: { url: '/sessions/user', method: 'get', propertyName: 'data.attributes' }
-        },
-        // tokenRequired: true,
-      }
-    }
-  },
-
   axios: {
     baseURL: 'http://localhost:8000',
     headers: {

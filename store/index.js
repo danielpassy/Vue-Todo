@@ -3,7 +3,8 @@ export const state = () => ({
         { description: "hiho", id: 0 },
         { description: "hiho", id: 1 },
         { description: "hiho", id: 2 },
-    ]
+    ],
+    initialized: false
 })
 
 export const getters = {
@@ -12,11 +13,17 @@ export const getters = {
     },
     getTodo: (state) => (id) => {
         return state.todos.find(todo => todo.id == id)
+    },
+    isInitialized: (state) => {
+        return state.initialized
     }
 }
 
 
 export const mutations = {
+    initialize(state){
+        state.initialized = true
+    },
     addTodo(state, description) {
         // prevent same ID 
 
