@@ -26,6 +26,8 @@ export default {
   plugins: [
   ],
 
+
+
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -36,8 +38,53 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
+
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
+
+
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/sessions', method: 'post', propertyName: 'token' },
+          logout: { url: '/sessions', method: 'delete' },
+          user: { url: '/sessions/user', method: 'get', propertyName: 'data.attributes' }
+        },
+        // tokenRequired: true,
+      }
+    }
+  },
+
+  axios: {
+    baseURL: 'http://localhost:8000',
+    headers: {
+      common: {
+        Accept: 'application/json, text/plain, */*'
+      }
+    }
+  },
+
+
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/api/api-token-auth/', method: 'post', propertyName: 'token' },
+          logout: { url: '/api/logout', method: 'get' },
+          user: { url: "/api/me", method: 'get' }
+        },
+        tokenName: 'Authorization',
+        token: {
+          type: 'token'
+        }
+      }
+    }
+  },
+
+
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -60,5 +107,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    publicPath: '/static/'
   }
 }
+
+

@@ -13,11 +13,14 @@ export default {
     let todo = { todo: store.getters.getTodo(params.id) };
     return todo;
   },
+  validate({ params, store }) {
+    return store.getters.getTodo(params.id);
+  },
   methods: {
     ...mapMutations(["addTodo", "delTodo"]),
     asd(id) {
       this.delTodo(id);
-      this.$router.push(`/`)
+      this.$router.push(`/`);
       this.todo = this.$store.getters.getTodo(id);
     },
   },

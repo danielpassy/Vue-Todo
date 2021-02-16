@@ -9,7 +9,7 @@
           name="todo"
           id="todo"
         />
-        <input type="submit"  />
+        <input type="submit" />
       </form>
     </div>
     <Todo @emitit="delTodo" v-for="todo in todos" :data="todo" :key="todo.id" />
@@ -19,6 +19,7 @@
 
 <script>
 import { mapMutations } from "Vuex";
+import axios from "axios";
 
 export default {
   componentes: {},
@@ -32,12 +33,27 @@ export default {
       todoInput: "",
     };
   },
+
+  async asyncData({ params, store, redirect }) {
+    try {
+      let { data } = await axios.get(
+        "https://jsonplaceholder.typicode.com/todos?_limit=5"
+      );
+      data.forEach((todo) => {
+        todo.description = todo.title;
+        store.commit("addAPITodo", todo);
+      });
+    } catch (error) {
+      redirect("/1/1");
+    }
+  },
+  async fetch() {},
   methods: {
-      createTodo(){
-          this.addTodo(this.todoInput)
-          this.todoInput = ""
-      },
-    ...mapMutations(["addTodo", "delTodo"]),
+    createTodo() {
+      this.addTodo(this.todoInput);
+      this.todoInput = "";
+    },
+    ...mapMutations(["addTodo", "delTodo", ""]),
   },
 };
 </script>

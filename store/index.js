@@ -34,6 +34,9 @@ export const mutations = {
             })
         }
     },
+    addAPITodo(state, todo) {
+        state.todos.push(todo)
+    },
     delTodo(state, id) {
         state.todos = state.todos.filter(todo => todo.id !== id)
     }
