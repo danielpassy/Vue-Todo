@@ -14,31 +14,28 @@
         <input type="submit" />
       </form>
     </div>
-    <div class="recipes">
-        <RecipeCard v-bind:recipe="recipes[0]" />
+    <div v-for='recipe in recipes' class="recipes">
+        <RecipeCard v-bind:recipe="recipe" v-bind:key='recipe.id' />
     </div>
     <div class="todos"></div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from "Vuex";
+import { mapMutations, mapState } from "Vuex";
 import axios from "axios";
 import { recipes } from "~/helpers/apimock/recipes";
 
 export default {
   componentes: {},
   computed: {
-    todos() {
-      return this.$store.getters.getTodos;
-    },
+    ...mapState(['recipes'])
   },
   data() {
     return {
       todoInput: "",
     };
   },
-
   async asyncData({ params, store, redirect }) {
     // only fetch data on first page load
     if (!store.state.initialized) {
@@ -51,7 +48,6 @@ export default {
       }
     }
   },
-  async fetch() {},
   methods: {
     putrecipes() {
       this.$store.commit("addManyRecipes", recipes);
