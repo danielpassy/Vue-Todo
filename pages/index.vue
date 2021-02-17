@@ -1,27 +1,16 @@
 <template>
-  <div class="container">
-    <div>
-      <h1 v-if="!$auth.loggedIn">
-        <NuxtLink to="/login">Login</NuxtLink>
-      </h1>
-      <div v-else>
-        <p @click="$auth.logout()">Logout</p>
-      </div>
-    </div>
-
+  <div id="main">
     <div id="flex">
-      <form v-on:submit.prevent="createTodo">
-        <input
-          type="text"
-          placeholder="Insert your Todo"
-          v-model="todoInput"
-          name="todo"
-          id="todo"
-        />
+      <br><form v-on:submit.prevent="putrecipes()">
+        <input type="submit" />
+      </form>
+      <br><form v-on:submit.prevent="getrecipe()">
+        <input type="submit" />
+      </form>
+     <br> <form v-on:submit.prevent="print()">
         <input type="submit" />
       </form>
     </div>
-    <Todo @emitit="delTodo" v-for="todo in todos" :data="todo" :key="todo.id" />
     <div class="todos"></div>
   </div>
 </template>
@@ -29,6 +18,7 @@
 <script>
 import { mapMutations } from "Vuex";
 import axios from "axios";
+import { recipes } from "~/helpers/apimock/recipes";
 
 export default {
   componentes: {},
@@ -47,31 +37,32 @@ export default {
     // only fetch data on first page load
     if (!store.state.initialized) {
       try {
-        let { data } = await axios.get(
-          "https://jsonplaceholder.typicode.com/todos?_limit=5"
-        );
-        data.forEach((todo) => {
-          todo.description = todo.title;
-          store.commit("addAPITodo", todo);
-        });
+        let data = recipes;
+        store.commit("addManyRecipes", data);
         store.commit("initialize");
       } catch (error) {
-        redirect("/1/1");
+        console.log(error);
       }
     }
   },
   async fetch() {},
   methods: {
-    createTodo() {
-      this.addTodo(this.todoInput);
-      this.todoInput = "";
+    putrecipes() {
+      this.$store.commit("addManyRecipes", recipes);
     },
-    ...mapMutations(["addTodo", "delTodo", "initialize"]),
+    getrecipe() {
+      let a = this.$store.getters.getRecipe(1);
+      console.log(a)
+    },
+    ...mapMutations(["addManyRecipes", "initialize"]),
   },
 };
 </script>
 
 <style>
+#main {
+  min-height: 80vh;
+}
 #flex {
   display: flex;
 }

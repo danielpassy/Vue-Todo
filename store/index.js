@@ -1,50 +1,49 @@
 export const state = () => ({
-    todos: [
-        { description: "hiho", id: 0 },
-        { description: "hiho", id: 1 },
-        { description: "hiho", id: 2 },
-    ],
+    cart: {},
+    recipes: [],
     initialized: false
 })
 
 export const getters = {
-    getTodos: (state) => {
-        return state.todos
+    getRecipe: (state) => (id) => {
+        return state.recipes[id]
     },
-    getTodo: (state) => (id) => {
-        return state.todos.find(todo => todo.id == id)
+    getNumberCartItens: (state) => {
+        return state.cart.length
     },
-    isInitialized: (state) => {
-        return state.initialized
+    getCartItens: (state) => {
+        let CartItens = state.recipes.filter((recipe) => recipe.id in Object.keys(cart))
+        return CartItens 
+    },
+    getIngredients: (state) => {
+        let CartItens = state.recipes.filter((recipe) => recipe.id in Object.keys(cart)).ingredients
+
     }
 }
 
 
 export const mutations = {
+    changeItemCart(state, id, change){
+        state.cart[id] = state.cart[id] + change 
+        if (state.cart[id] >= 0){
+            delete state.cart[id]
+        }
+    },
+    addItemCart(state, id){
+        state.cart[id] = 1
+    },
+    addRecipe(state, recipe){
+        state.recipes.push(recipe)
+    },
+    addManyRecipes(state, arrayOfRecipes){
+        arrayOfRecipes.forEach((recipe) => {
+            state.recipes.push(recipe)
+        })
+    },
+    cleanCart(state){
+        state.cart = {}
+    },
     initialize(state){
         state.initialized = true
-    },
-    addTodo(state, description) {
-        // prevent same ID 
-
-        let length = state.todos.length
-        if (length != 0) {
-            state.todos.push({
-                description: description,
-                id: state.todos[length - 1].id + 1
-            })
-        }
-        else {
-            state.todos.push({
-                description: description,
-                id: 0
-            })
-        }
-    },
-    addAPITodo(state, todo) {
-        state.todos.push(todo)
-    },
-    delTodo(state, id) {
-        state.todos = state.todos.filter(todo => todo.id !== id)
     }
 }

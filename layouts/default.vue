@@ -1,20 +1,46 @@
 <template>
-  <v-app>
-    <TheSnackbar />
-    <nuxt />
+  <v-app id="inspire">
+    <toolbar :state="layout" />
+    <v-content>
+      <v-container fluid>
+        <nuxt />
+      </v-container>
+    </v-content>
+    <le-footer />
+    <v-snackbar
+      :timeout="snack.timeout"
+      :color="snack.color"
+      bottom
+      v-model="snack.visible"
+    >
+      {{snack.text}}
+      <v-btn dark text @click.native="closeSnack">Close</v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
-import TheSnackbar from "@/components/TheSnackbar.vue";
+import toolbar from '~/components/toolbar.vue'
+import footer from '~/components/footer.vue'
 export default {
   components: {
-    TheSnackbar,
+    toolbar,
+    leFooter: footer
+  },
+  data: () => ({
+    layout: {
+      drawer: true
+    }
+  }),
+  computed: {
+    snack () {
+      return JSON.parse(JSON.stringify(this.$store.state.snack.snack))
+    }
   },
   methods: {
-    asd() {
-      alert("hi");
-    },
-  },
-};
+    closeSnack () {
+      this.$store.commit('snack/hide')
+    }
+  }
+}
 </script>
