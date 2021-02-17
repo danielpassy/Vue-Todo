@@ -1,15 +1,21 @@
 <template>
   <div id="main">
     <div id="flex">
-      <br><form v-on:submit.prevent="putrecipes()">
+      <br />
+      <form v-on:submit.prevent="putrecipes()">
         <input type="submit" />
       </form>
-      <br><form v-on:submit.prevent="getrecipe()">
+      <br />
+      <form v-on:submit.prevent="getrecipe()">
         <input type="submit" />
       </form>
-     <br> <form v-on:submit.prevent="print()">
+      <br />
+      <form v-on:submit.prevent="print()">
         <input type="submit" />
       </form>
+    </div>
+    <div class="recipes">
+        <RecipeCard v-bind:recipe="recipes[0]" />
     </div>
     <div class="todos"></div>
   </div>
@@ -52,7 +58,7 @@ export default {
     },
     getrecipe() {
       let a = this.$store.getters.getRecipe(1);
-      console.log(a)
+      console.log(a);
     },
     ...mapMutations(["addManyRecipes", "initialize"]),
   },
