@@ -1,12 +1,40 @@
 <template>
   <v-toolbar>
-    <v-toolbar-title>Almojanta</v-toolbar-title>
-    <v-text-field class="hello" label="Solo" solo dense></v-text-field>
-    <v-btn icon @click="searching = !searching">
-      <v-icon>mdi-magnify</v-icon>
-    </v-btn>
+    <NuxtLink id="noDecoration" to="/"
+      ><v-toolbar-title>Almojanta</v-toolbar-title>
+    </NuxtLink>
+    <form @submit="searchEntry">
+      <v-text-field
+        class="searchField"
+        hide-details
+        single-line
+        v-model="searchText"
+      ></v-text-field>
+    </form>
+    <v-icon @click="searchEntry">mdi-magnify</v-icon>
 
     <v-spacer />
+
+    <v-btn icon @click="openCart = !openCart">
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="" dark v-bind="attrs" v-on="on" :left="true">
+            <v-icon>mdi-cart</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item key="index">
+            <v-list-item-title
+              ><div>{{ $store.getters.getCartPortionsQuantity() }}</div>
+              <div>Porções</div>
+              <div>
+                <NuxtLink to="/cart">Fazer Checkout</NuxtLink>
+              </div></v-list-item-title
+            >
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-btn>
     <v-btn
       v-if="!logged_user"
       text
@@ -59,20 +87,6 @@
         </v-list>
       </v-card>
     </v-menu>
-    <v-btn icon @click="searching = !searching">
-      <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="" dark v-bind="attrs" v-on="on" left='true'>
-            <v-icon>mdi-cart</v-icon>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item key="index">
-            <v-list-item-title><div>hi</div><div>hello</div></v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-btn>
   </v-toolbar>
 </template>
 
@@ -82,7 +96,8 @@ import api from "~api";
 
 export default {
   data: () => ({
-    searching: true,
+    openCart: true,
+    searchText: "",
   }),
   props: ["state"],
   computed: {
@@ -100,6 +115,22 @@ export default {
       this.$store.commit("auth/setCurrentUser", null);
       Snacks.show(this.$store, { text: "Até logo!" });
     },
+    searchEntry(){
+      alert("to be implemented")
+
+    }
   },
 };
 </script>
+
+<style>
+#noDecoration {
+  text-decoration: none !important;
+  color: inherit;
+  padding-right: 50px;
+}
+
+.searchField {
+  max-width: 250px !important;
+}
+</style>

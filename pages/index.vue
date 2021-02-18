@@ -1,60 +1,33 @@
 <template>
   <div id="main">
     <div id="flex">
-      <br />
-      <form v-on:submit.prevent="putrecipes()">
-        <input type="submit" />
-      </form>
-      <br />
-      <form v-on:submit.prevent="getrecipe()">
-        <input type="submit" />
-      </form>
-      <br />
-      <form v-on:submit.prevent="print()">
-        <input type="submit" />
-      </form>
     </div>
-    <div v-for='recipe in recipes' class="recipes">
-        <RecipeCard v-bind:recipe="recipe" v-bind:key='recipe.id' />
-    </div>
-    <div class="todos"></div>
+    <v-container style="width: 90%">
+      <v-layout row wrap>
+        <v-row v-for="recipe in recipes" :key="recipe.id" >
+          <RecipeCard v-bind:recipe="recipe" />
+        </v-row>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from "Vuex";
-import axios from "axios";
-import { recipes } from "~/helpers/apimock/recipes";
 
 export default {
   componentes: {},
   computed: {
-    ...mapState(['recipes'])
+    ...mapState(["recipes"]),
   },
   data() {
     return {
       todoInput: "",
     };
   },
-  async asyncData({ params, store, redirect }) {
-    // only fetch data on first page load
-    if (!store.state.initialized) {
-      try {
-        let data = recipes;
-        store.commit("addManyRecipes", data);
-        store.commit("initialize");
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  },
   methods: {
     putrecipes() {
-      this.$store.commit("addManyRecipes", recipes);
-    },
-    getrecipe() {
-      let a = this.$store.getters.getRecipe(1);
-      console.log(a);
+      this.$store.getters.getIngredients();
     },
     ...mapMutations(["addManyRecipes", "initialize"]),
   },

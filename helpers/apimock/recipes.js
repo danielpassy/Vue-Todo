@@ -24,7 +24,7 @@ export const recipes = [
     {
         id: 3,
         name: 'Peixe ao forno',
-        img: 'https://d37k6lxrz24y4c.cloudfront.net/v2/pt-br/e9dc924f238fa6cc29465942875fe8f0/27663458-c74a-4b82-bfbb-910b5d107c18-600.jpg',
+        img: 'https://www.thespruceeats.com/thmb/DW6l-ggFEEAJFv1Zbx5_akdY5fE=/4300x2867/filters:fill(auto,1)/brazilian-fish-stew-moqueca-de-peixe-3029430-hero-01-2ee7d07d5b374419b7cb6ebc4eaf4c91.jpg',
         ingredients: [
             { id: 3, name: 'pimenta do reino', quantity: 'pitada', unit: '' },
             { id: 4, name: 'batata', quantity: '400', unit: 'g' },
@@ -35,7 +35,7 @@ export const recipes = [
     {
         id: 4,
         name: 'Nhoque',
-        img: 'https://d37k6lxrz24y4c.cloudfront.net/v2/pt-br/e9dc924f238fa6cc29465942875fe8f0/27663458-c74a-4b82-bfbb-910b5d107c18-600.jpg',
+        img: 'https://comisebebisjacare.com.br/wp-content/uploads/2012/08/nhoque.png',
         ingredients: [
             { id: 1, name: 'batata doce', quantity: '300', unit: 'g' },
             { id: 5, name: 'molho de tomate', quantity: '2', unit: 'copos' },
